@@ -6,6 +6,7 @@ use crate::{
     error::{Error, Result},
 };
 
+/// 8-bit data bus
 pub struct EightBitBus<
     RS: OutputPin,
     EN: OutputPin,
@@ -43,6 +44,7 @@ impl<
         D7: OutputPin,
     > EightBitBus<RS, EN, D0, D1, D2, D3, D4, D5, D6, D7>
 {
+    /// Create a new bus from the given pins
     #[allow(clippy::too_many_arguments)]
     pub fn from_pins(
         rs: RS,
@@ -70,6 +72,7 @@ impl<
         }
     }
 
+    /// Set the data bus to the given value
     fn set_bus_bits(&mut self, data: u8) -> Result<()> {
         let db0: bool = (0b0000_0001 & data) != 0;
         let db1: bool = (0b0000_0010 & data) != 0;
@@ -129,6 +132,14 @@ impl<
         }
 
         Ok(())
+    }
+
+    /// Release the bus and return the pins
+    fn free(self) -> (RS, EN, D0, D1, D2, D3, D4, D5, D6, D7) {
+        (
+            self.rs, self.en, self.d0, self.d1, self.d2, self.d3, self.d4, self.d5, self.d6,
+            self.d7,
+        )
     }
 }
 

@@ -36,6 +36,11 @@ impl<I2C: Write> I2CBus<I2C> {
         delay.delay_ms(2u8);
         let _ = self.i2c_bus.write(self.address, &[byte]);
     }
+
+    /// Release the i2cbus and return it
+    fn free(self) -> I2C {
+        self.i2c_bus
+    }
 }
 
 impl<I2C: Write> DataBus for I2CBus<I2C> {

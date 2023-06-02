@@ -105,6 +105,11 @@ impl<RS: OutputPin, EN: OutputPin, D4: OutputPin, D5: OutputPin, D6: OutputPin, 
         }
         Ok(())
     }
+
+    /// Release the bus and return the pins
+    fn free(self) -> (RS, EN, D4, D5, D6, D7) {
+        (self.rs, self.en, self.d4, self.d5, self.d6, self.d7)
+    }
 }
 
 impl<RS: OutputPin, EN: OutputPin, D4: OutputPin, D5: OutputPin, D6: OutputPin, D7: OutputPin>
